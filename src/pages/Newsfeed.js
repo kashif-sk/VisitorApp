@@ -13,9 +13,10 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Linking, ActivityIndicator, FlatList, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-const newsFeedUrl = 'http://newsapi.org/v2/everything?q=bitcoin&from=2020-04-16&sortBy=publishedAt&apiKey=1848b5465b1449d78d10c2991b1bea98';
+let date = new Date();
+let todaysDate =  date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+const newsFeedUrl = `http://newsapi.org/v2/everything?q=bitcoin&from=${todaysDate}&sortBy=publishedAt&apiKey=1848b5465b1449d78d10c2991b1bea98`;
 
 class Newsfeed extends Component {
     state = {
@@ -68,7 +69,6 @@ class Newsfeed extends Component {
 
     renderItem(article) {
         const { title, urlToImage, author, url, publishedAt } = article.item;
-        const { navigation } = this.props;
         return (
             <View style={styles.newsView}>
                 {urlToImage ?
@@ -154,8 +154,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function (props) {
-    const navigation = useNavigation();
-
-    return <Newsfeed {...props} navigation={navigation} />;
-};
+export default Newsfeed;
